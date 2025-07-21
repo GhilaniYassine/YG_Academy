@@ -160,5 +160,5 @@ This project represents my journey in mastering Django development while explori
 
 ⭐ **Star this repository if you find it helpful!**
 
-**Made with ❤️ and lots of ☕ by [Your Name]**
+**Made with ❤️ and lots of ☕ by [Yassine Ghilani]**
 #YG
