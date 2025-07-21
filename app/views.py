@@ -11,6 +11,11 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 from .models import CustomUser, MathCourse
+from .models import Quiz, QuizAttempt
+from .services import GeminiQuizService
+import json
+import time
+import os  # Add this missing import
 
 # Custom decorator to check if user is a teacher
 def teacher_required(view_func):
@@ -399,3 +404,177 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
 
 def custom_404_view(request, exception):
     return render(request, '404.html', status=404)
+
+@login_required(login_url='login')
+def ai_quiz_home(request):
+    """AI Quiz home page for students"""
+    if request.user.is_teacher:
+        messages.error(request, 'This feature is only available for students.')
+        return redirect('teacher_dashboard')
+    
+    # Get student's quiz history
+    recent_quizzes = Quiz.objects.filter(student=request.user).order_by('-created_at')[:5]
+    recent_attempts = QuizAttempt.objects.filter(student=request.user).order_by('-completed_at')[:5]
+    
+    context = {
+        'recent_quizzes': recent_quizzes,
+        'recent_attempts': recent_attempts,
+    }
+    return render(request, 'ai_quiz/quiz_home.html', context)
+
+@login_required(login_url='login')
+def upload_pdf(request):
+    """Handle PDF upload and quiz generation"""
+    if request.user.is_teacher:
+        messages.error(request, 'This feature is only available for students.')
+        return redirect('teacher_dashboard')
+    
+    if request.method == 'POST':
+        try:
+            pdf_file = request.FILES.get('pdf_file')
+            quiz_title = request.POST.get('quiz_title', 'AI Generated Quiz')
+            num_questions = int(request.POST.get('num_questions', 10))
+            
+            print(f"Debug: PDF file received: {pdf_file}")
+            print(f"Debug: Quiz title: {quiz_title}")
+            print(f"Debug: Number of questions: {num_questions}")
+            
+            if not pdf_file:
+                messages.error(request, 'Please select a PDF file.')
+                return render(request, 'ai_quiz/upload_pdf.html')
+            
+            if not pdf_file.name.endswith('.pdf'):
+                messages.error(request, 'Please upload a valid PDF file.')
+                return render(request, 'ai_quiz/upload_pdf.html')
+            
+            # Check if Gemini API key is configured
+            gemini_api_key = os.getenv('GEMINI_API_KEY')
+            if not gemini_api_key or gemini_api_key == 'your_gemini_api_key_here':
+                messages.error(request, 'AI service is not configured. Please contact administrator.')
+                return render(request, 'ai_quiz/upload_pdf.html')
+            
+            print("Debug: Initializing Gemini service...")
+            # Initialize Gemini service
+            quiz_service = GeminiQuizService()
+            
+            print("Debug: Extracting PDF text...")
+            # Extract text from PDF
+            pdf_text = quiz_service.extract_pdf_text(pdf_file)
+            
+            print(f"Debug: PDF text length: {len(pdf_text)}")
+            
+            if len(pdf_text.strip()) < 100:
+                messages.error(request, 'PDF content is too short to generate a meaningful quiz.')
+                return render(request, 'ai_quiz/upload_pdf.html')
+            
+            print("Debug: Generating quiz questions...")
+            # Generate quiz questions
+            questions = quiz_service.generate_quiz(pdf_text, num_questions)
+            
+            print(f"Debug: Generated {len(questions)} questions")
+            
+            # Create quiz in database
+            quiz = Quiz.objects.create(
+                title=quiz_title,
+                student=request.user,
+                pdf_content=pdf_text[:2000],  # Store first 2000 chars
+                total_questions=len(questions)
+            )
+            quiz.set_questions(questions)
+            quiz.save()
+            
+            print(f"Debug: Quiz created with ID: {quiz.id}")
+            
+            messages.success(request, f'Quiz "{quiz_title}" generated successfully with {len(questions)} questions!')
+            return redirect('take_quiz', quiz_id=quiz.id)
+            
+        except Exception as e:
+            print(f"Debug: Error occurred: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            messages.error(request, f'Error generating quiz: {str(e)}')
+            return render(request, 'ai_quiz/upload_pdf.html')
+    
+    return render(request, 'ai_quiz/upload_pdf.html')
+
+@login_required(login_url='login')
+def take_quiz(request, quiz_id):
+    """Take a quiz"""
+    quiz = get_object_or_404(Quiz, id=quiz_id, student=request.user)
+    
+    if request.method == 'POST':
+        try:
+            # Get user answers
+            user_answers = {}
+            for key, value in request.POST.items():
+                if key.startswith('question_'):
+                    question_id = key.replace('question_', '')
+                    user_answers[question_id] = value
+            
+            # Calculate start time (you might want to store this in session)
+            time_taken = int(request.POST.get('time_taken', 0))
+            
+            # Evaluate answers
+            quiz_service = GeminiQuizService()
+            questions = quiz.get_questions()
+            evaluation = quiz_service.evaluate_answers(questions, user_answers)
+            
+            # Create quiz attempt
+            attempt = QuizAttempt.objects.create(
+                quiz=quiz,
+                student=request.user,
+                score=evaluation['score'],
+                total_questions=evaluation['total_questions'],
+                correct_answers=evaluation['correct_count'],
+                time_taken=time_taken
+            )
+            attempt.set_answers(user_answers)
+            attempt.save()
+            
+            # Mark quiz as completed
+            quiz.is_completed = True
+            quiz.save()
+            
+            return redirect('quiz_results', attempt_id=attempt.id)
+            
+        except Exception as e:
+            messages.error(request, f'Error submitting quiz: {str(e)}')
+    
+    questions = quiz.get_questions()
+    context = {
+        'quiz': quiz,
+        'questions': questions,
+    }
+    return render(request, 'ai_quiz/take_quiz.html', context)
+
+@login_required(login_url='login')
+def quiz_results(request, attempt_id):
+    """Show quiz results"""
+    attempt = get_object_or_404(QuizAttempt, id=attempt_id, student=request.user)
+    
+    # Get detailed results
+    quiz_service = GeminiQuizService()
+    questions = attempt.quiz.get_questions()
+    user_answers = attempt.get_answers()
+    evaluation = quiz_service.evaluate_answers(questions, user_answers)
+    
+    context = {
+        'attempt': attempt,
+        'evaluation': evaluation,
+        'percentage': attempt.calculate_percentage(),
+    }
+    return render(request, 'ai_quiz/quiz_results.html', context)
+
+@login_required(login_url='login')
+def quiz_history(request):
+    """Show student's quiz history"""
+    if request.user.is_teacher:
+        messages.error(request, 'This feature is only available for students.')
+        return redirect('teacher_dashboard')
+    
+    attempts = QuizAttempt.objects.filter(student=request.user).order_by('-completed_at')
+    
+    context = {
+        'attempts': attempts,
+    }
+    return render(request, 'ai_quiz/quiz_history.html', context)

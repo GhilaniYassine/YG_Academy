@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import json
 
 class CustomUser(AbstractUser):
     # Add custom fields for subject access
@@ -42,6 +43,60 @@ class MathCourse(models.Model):
     
     def __str__(self):
         return f"{self.name_of_course} - {self.name_of_chapter} - {self.video_title}"
+
+class Quiz(models.Model):
+    title = models.CharField(max_length=200)
+    student = models.ForeignKey(CustomUser, on_delete=models.CASCADE, limit_choices_to={'is_teacher': False})
+    pdf_content = models.TextField()  # Store extracted PDF text
+    questions_data = models.TextField()  # Store JSON of questions and answers
+    total_questions = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_completed = models.BooleanField(default=False)
+    
+    def get_questions(self):
+        """Parse JSON questions data"""
+        try:
+            return json.loads(self.questions_data)
+        except:
+            return []
+    
+    def set_questions(self, questions):
+        """Store questions as JSON"""
+        self.questions_data = json.dumps(questions)
+        self.total_questions = len(questions)
+    
+    def __str__(self):
+        return f"Quiz: {self.title} - {self.student.username}"
+
+class QuizAttempt(models.Model):
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    answers = models.TextField()  # Store JSON of user answers
+    score = models.FloatField(default=0.0)
+    total_questions = models.IntegerField(default=0)
+    correct_answers = models.IntegerField(default=0)
+    completed_at = models.DateTimeField(auto_now_add=True)
+    time_taken = models.IntegerField(default=0)  # in seconds
+    
+    def get_answers(self):
+        """Parse JSON answers data"""
+        try:
+            return json.loads(self.answers)
+        except:
+            return {}
+    
+    def set_answers(self, answers):
+        """Store answers as JSON"""
+        self.answers = json.dumps(answers)
+    
+    def calculate_percentage(self):
+        """Calculate percentage score"""
+        if self.total_questions > 0:
+            return round((self.correct_answers / self.total_questions) * 100, 1)
+        return 0
+    
+    def __str__(self):
+        return f"{self.student.username} - {self.quiz.title} - {self.score}%"
 
 
 

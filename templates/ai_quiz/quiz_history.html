@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz History - YG ACADEMY</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ai_quiz.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <span class="logo-text">Quiz History</span>
+                </div>
+                <nav class="nav">
+                    <a href="{% url 'ai_quiz_home' %}" class="nav-item">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to AI Quiz
+                    </a>
+                </nav>
+                <div class="user-profile">
+                    <div class="user-info">
+                        <span class="user-name">{{ user.username }}</span>
+                        <span class="user-role">Student</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="content-wrapper">
+                <h1 class="page-title">Quiz History</h1>
+                <p class="page-subtitle">View all your previous quiz attempts and results</p>
+
+                {% if attempts %}
+                <div class="quiz-grid">
+                    {% for attempt in attempts %}
+                    <div class="quiz-card">
+                        <div class="quiz-header">
+                            <h4>{{ attempt.quiz.title }}</h4>
+                            <span class="score-badge score-{{ attempt.calculate_percentage|floatformat:0 }}">
+                                {{ attempt.calculate_percentage }}%
+                            </span>
+                        </div>
+                        <div class="quiz-details">
+                            <p><i class="fas fa-calendar"></i> {{ attempt.completed_at|date:"M d, Y H:i" }}</p>
+                            <p><i class="fas fa-clock"></i> {{ attempt.time_taken }} seconds</p>
+                            <p><i class="fas fa-check-circle"></i> {{ attempt.correct_answers }}/{{ attempt.total_questions }} correct</p>
+                        </div>
+                        <a href="{% url 'quiz_results' attempt.id %}" class="btn btn-primary">
+                            <i class="fas fa-eye"></i>
+                            View Results
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>No Quiz History</h3>
+                    <p>You haven't taken any quizzes yet. Upload a PDF to get started!</p>
+                    <a href="{% url 'upload_pdf' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Create Your First Quiz
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+</body>
+</html>

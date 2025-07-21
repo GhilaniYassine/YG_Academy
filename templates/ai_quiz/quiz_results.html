@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results - YG ACADEMY</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ai_quiz.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <span class="logo-text">Quiz Results</span>
+                </div>
+                <nav class="nav">
+                    <a href="{% url 'ai_quiz_home' %}" class="nav-item">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to AI Quiz
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="results-container">
+                <div class="score-summary">
+                    <div class="score-circle">
+                        {{ percentage }}%
+                    </div>
+                    <h2>{{ attempt.quiz.title }}</h2>
+                    <p>Quiz completed on {{ attempt.completed_at|date:"F d, Y at H:i" }}</p>
+                </div>
+
+                <div class="results-details">
+                    <div class="detail-card">
+                        <i class="fas fa-percentage"></i>
+                        <h3>{{ percentage }}%</h3>
+                        <p>Final Score</p>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>{{ attempt.correct_answers }}</h3>
+                        <p>Correct Answers</p>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>{{ attempt.total_questions }}</h3>
+                        <p>Total Questions</p>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>{{ attempt.time_taken }}s</h3>
+                        <p>Time Taken</p>
+                    </div>
+                </div>
+
+                {% if evaluation.results %}
+                <div class="question-results">
+                    <h3>Detailed Results</h3>
+                    {% for result in evaluation.results %}
+                    <div class="result-card {% if result.is_correct %}correct{% else %}incorrect{% endif %}">
+                        <div class="result-header">
+                            <span class="question-number">Q{{ forloop.counter }}</span>
+                            <span class="result-icon">
+                                {% if result.is_correct %}
+                                    <i class="fas fa-check-circle"></i>
+                                {% else %}
+                                    <i class="fas fa-times-circle"></i>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="result-content">
+                            <p class="question-text">{{ result.question }}</p>
+                            <p class="answer-info">
+                                <strong>Your answer:</strong> {{ result.user_answer|default:"Not answered" }}
+                                <br>
+                                <strong>Correct answer:</strong> {{ result.correct_answer }}
+                            </p>
+                            {% if result.explanation %}
+                            <p class="explanation">
+                                <strong>Explanation:</strong> {{ result.explanation }}
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="action-buttons">
+                    <a href="{% url 'upload_pdf' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Take Another Quiz
+                    </a>
+                    <a href="{% url 'quiz_history' %}" class="btn btn-secondary">
+                        <i class="fas fa-history"></i>
+                        View History
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

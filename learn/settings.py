@@ -149,3 +149,14 @@ DEFAULT_FROM_EMAIL = 'ghilaniyassine11@gmail.com'
 # Session Configuration
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 3600  # 1 hour (60 minutes * 60 seconds)
+
+# Gemini AI Configuration
+GEMINI_API_KEY = str(os.getenv('GEMINI_API_KEY'))
+
+# Media files configuration for PDF uploads
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# File upload settings
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB

@@ -36,4 +36,11 @@ urlpatterns = [
     path('password-reset-complete/',
          auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
          name='password_reset_complete'),
+
+    # AI Quiz URLs
+    path('ai-quiz/', views.ai_quiz_home, name='ai_quiz_home'),
+    path('ai-quiz/upload/', views.upload_pdf, name='upload_pdf'),
+    path('ai-quiz/take/<int:quiz_id>/', views.take_quiz, name='take_quiz'),
+    path('ai-quiz/results/<int:attempt_id>/', views.quiz_results, name='quiz_results'),
+    path('ai-quiz/history/', views.quiz_history, name='quiz_history'),
 ]

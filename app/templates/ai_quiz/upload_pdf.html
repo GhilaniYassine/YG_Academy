@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload PDF - AI Quiz Assistant</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ai_quiz.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <span class="logo-text">Upload PDF</span>
+                </div>
+                <nav class="nav">
+                    <a href="{% url 'ai_quiz_home' %}" class="nav-item">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to AI Quiz
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="content-wrapper">
+                <div class="upload-container">
+                    <h1>Upload PDF Document</h1>
+                    <p>Upload a PDF file and AI will generate quiz questions based on its content</p>
+
+                    <form method="post" enctype="multipart/form-data" class="upload-form">
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label for="quiz_title">Quiz Title</label>
+                            <input type="text" id="quiz_title" name="quiz_title" 
+                                   placeholder="Enter a title for your quiz" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="num_questions">Number of Questions</label>
+                            <select id="num_questions" name="num_questions">
+                                <option value="5">5 Questions</option>
+                                <option value="10" selected>10 Questions</option>
+                                <option value="15">15 Questions</option>
+                                <option value="20">20 Questions</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pdf_file">PDF Document</label>
+                            <div class="file-upload-area" id="fileUploadArea">
+                                <input type="file" id="pdf_file" name="pdf_file" accept=".pdf" required>
+                                <div class="upload-placeholder">
+                                    <i class="fas fa-file-pdf"></i>
+                                    <p>Click to select PDF file or drag and drop</p>
+                                    <small>Maximum file size: 10MB</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="generateBtn">
+                            <i class="fas fa-magic"></i>
+                            Generate Quiz
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // File upload styling
+        document.getElementById('pdf_file').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name;
+            if (fileName) {
+                document.querySelector('.upload-placeholder p').textContent = fileName;
+            }
+        });
+
+        // Form submission loading state
+        document.querySelector('.upload-form').addEventListener('submit', function() {
+            const btn = document.getElementById('generateBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating Quiz...';
+            btn.disabled = true;
+        });
+    </script>
+</body>
+</html>

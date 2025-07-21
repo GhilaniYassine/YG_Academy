@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Quiz Assistant - YG ACADEMY</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ai_quiz.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <span class="logo-text">AI Quiz Assistant</span>
+                </div>
+                <nav class="nav">
+                    <a href="{% url 'dashboard' %}" class="nav-item">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Dashboard
+                    </a>
+                </nav>
+                <div class="user-profile">
+                    <div class="user-info">
+                        <span class="user-name">{{ user.username }}</span>
+                        <span class="user-role">Student</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="content-wrapper">
+                <h1 class="page-title">AI Quiz Assistant</h1>
+                <p class="page-subtitle">Upload a PDF and get an AI-generated quiz to test your knowledge</p>
+
+                <div class="quiz-actions">
+                    <div class="action-card">
+                        <div class="card-icon">
+                            <i class="fas fa-upload"></i>
+                        </div>
+                        <h3>Create New Quiz</h3>
+                        <p>Upload a PDF document and let AI generate a personalized quiz for you</p>
+                        <a href="{% url 'upload_pdf' %}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Start New Quiz
+                        </a>
+                    </div>
+
+                    <div class="action-card">
+                        <div class="card-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <h3>Quiz History</h3>
+                        <p>View your previous quiz attempts and track your progress</p>
+                        <a href="{% url 'quiz_history' %}" class="btn btn-secondary">
+                            <i class="fas fa-chart-line"></i>
+                            View History
+                        </a>
+                    </div>
+                </div>
+
+                {% if recent_attempts %}
+                <div class="recent-section">
+                    <h2>Recent Quiz Attempts</h2>
+                    <div class="quiz-grid">
+                        {% for attempt in recent_attempts %}
+                        <div class="quiz-card">
+                            <div class="quiz-header">
+                                <h4>{{ attempt.quiz.title }}</h4>
+                                <span class="score-badge score-{{ attempt.calculate_percentage|floatformat:0 }}">
+                                    {{ attempt.calculate_percentage }}%
+                                </span>
+                            </div>
+                            <div class="quiz-details">
+                                <p><i class="fas fa-calendar"></i> {{ attempt.completed_at|date:"M d, Y" }}</p>
+                                <p><i class="fas fa-clock"></i> {{ attempt.time_taken }} seconds</p>
+                                <p><i class="fas fa-check-circle"></i> {{ attempt.correct_answers }}/{{ attempt.total_questions }} correct</p>
+                            </div>
+                            <a href="{% url 'quiz_results' attempt.id %}" class="btn btn-sm">View Results</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </main>
+    </div>
+</body>
+</html>

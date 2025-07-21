@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ quiz.title }} - YG ACADEMY</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ai_quiz.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-clipboard-question"></i>
+                    </div>
+                    <span class="logo-text">{{ quiz.title }}</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="quiz-timer" id="timer">
+            <i class="fas fa-clock"></i>
+            Time: <span id="timeDisplay">00:00</span>
+        </div>
+
+        <main class="main-content">
+            <div class="quiz-container">
+                <form method="post" id="quizForm">
+                    {% csrf_token %}
+                    <input type="hidden" name="time_taken" id="timeTaken">
+                    
+                    {% for question in questions %}
+                    <div class="question-card">
+                        <div class="question-header">
+                            <div class="question-number">{{ forloop.counter }}</div>
+                            <div class="question-text">{{ question.question }}</div>
+                        </div>
+                        
+                        <div class="options-container">
+                            {% for option_key, option_text in question.options.items %}
+                            <label class="option">
+                                <input type="radio" name="question_{{ forloop.parentloop.counter0 }}" value="{{ option_key }}" required>
+                                <span class="option-text"><strong>{{ option_key }}.</strong> {{ option_text }}</span>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="submit-section">
+                        <h3>Ready to Submit?</h3>
+                        <p>Make sure you've answered all questions before submitting.</p>
+                        <button type="submit" class="btn btn-primary btn-large">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit Quiz
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let startTime = Date.now();
+        let timerInterval;
+
+        function updateTimer() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('timeDisplay').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        timerInterval = setInterval(updateTimer, 1000);
+
+        document.getElementById('quizForm').addEventListener('submit', function() {
+            const timeTaken = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('timeTaken').value = timeTaken;
+            clearInterval(timerInterval);
+        });
+
+        // Option selection styling
+        document.querySelectorAll('.option input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Remove selected class from all options in this question
+                const questionCard = this.closest('.question-card');
+                questionCard.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                
+                // Add selected class to chosen option
+                this.closest('.option').classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>
