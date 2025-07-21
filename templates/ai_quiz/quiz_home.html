@@ -90,6 +90,45 @@
                 {% endif %}
             </div>
         </main>
+
+        <!-- Enhanced Floating AI Assistant Button -->
+        <button class="ai-assistant-btn" onclick="scrollToTop()" title="Scroll to Top">
+            <img src="{% static 'images/ai.png' %}" alt="AI Assistant" class="ai-logo">
+            <span class="ai-text">Top</span>
+        </button>
     </div>
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Enhanced AI button interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const aiBtn = document.querySelector('.ai-assistant-btn');
+            
+            // Show/hide based on scroll position
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    aiBtn.style.opacity = '1';
+                    aiBtn.style.pointerEvents = 'auto';
+                } else {
+                    aiBtn.style.opacity = '0.7';
+                    aiBtn.style.pointerEvents = 'auto';
+                }
+            });
+            
+            // Add click animation
+            aiBtn.addEventListener('click', function() {
+                this.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    </script>
 </body>
 </html>
