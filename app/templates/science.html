@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YG ACADEMY</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #2E8B57 0%, #20B2AA 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #2E8B57, #20B2AA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .search-container {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+            margin: 0 2rem;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 20px 12px 50px;
+            border: 2px solid #e1e5e9;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #2E8B57;
+            box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #2E8B57;
+            font-size: 18px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 3rem 0;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Topics Grid */
+        .topics-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .topic-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+        }
+
+        .topic-header {
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #f0f8f0, #e0f2f1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, #2E8B57, #20B2AA);
+            transition: width 0.3s ease;
+        }
+
+        .topic-header:hover::before {
+            width: 8px;
+        }
+
+        .topic-header.active {
+            background: linear-gradient(135deg, #2E8B57, #20B2AA);
+            color: white;
+        }
+
+        .topic-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .topic-icon {
+            font-size: 1.5rem;
+            color: #2E8B57;
+            transition: all 0.3s ease;
+        }
+
+        .topic-header.active .topic-icon {
+            color: white;
+        }
+
+        .expand-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: #2E8B57;
+        }
+
+        .topic-header.active .expand-icon {
+            transform: rotate(180deg);
+            color: white;
+        }
+
+        .topic-content {
+            display: none;
+            padding: 0 2rem 2rem;
+            background: white;
+        }
+
+        .video-list {
+            list-style: none;
+        }
+
+        .video-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f0f8f0;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .video-item:hover {
+            background: #e0f2f1;
+            border-left-color: #2E8B57;
+            transform: translateX(5px);
+        }
+
+        .video-link {
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 500;
+        }
+
+        .video-link:hover {
+            color: #2E8B57;
+        }
+
+        .play-icon {
+            color: #2E8B57;
+            font-size: 1.2rem;
+        }
+
+        .video-duration {
+            margin-left: auto;
+            color: #666;
+            font-size: 0.9rem;
+            background: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        /* Back to Dashboard Button */
+        .back-dashboard-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: linear-gradient(135deg, #2E8B57 0%, #20B2AA 100%);
+            color: white;
+            border: none;
+            padding: 16px 22px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .back-dashboard-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #228B22 0%, #1E90FF 100%);
+        }
+
+        .back-dashboard-btn i {
+            font-size: 16px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-container {
+                margin: 0;
+                max-width: 100%;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .topic-header {
+                padding: 1rem 1.5rem;
+            }
+
+            .topic-title {
+                font-size: 1.2rem;
+            }
+
+            .topic-content {
+                padding: 0 1.5rem 1.5rem;
+            }
+
+            .back-dashboard-btn {
+                bottom: 20px;
+                left: 20px;
+                padding: 14px 18px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .topic-header {
+                padding: 1rem;
+            }
+
+            .topic-content {
+                padding: 0 1rem 1rem;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-down {
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 500px;
+            }
+        }
+
+        /* No results message */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: white;
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-flask"></i> Science Learning Hub
+                </div>
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-box" placeholder="Search science topics..." id="searchInput">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="hero-section">
+                <h1 class="hero-title">Discover Science</h1>
+                <p class="hero-subtitle">Explore the wonders of science through comprehensive topics and engaging experiments</p>
+            </section>
+
+            <section class="topics-grid" id="topicsGrid">
+                <div class="topic-card fade-in" data-topic="biology">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-dna topic-icon"></i>
+                            Biology
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/cell-structure" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Cell Structure and Function
+                                    <span class="video-duration">19:30</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/genetics" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Genetics and Heredity
+                                    <span class="video-duration">24:15</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/evolution" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Evolution and Natural Selection
+                                    <span class="video-duration">22:45</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="topic-card fade-in" data-topic="chemistry">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-atom topic-icon"></i>
+                            Chemistry
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/atomic-structure" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Atomic Structure and Bonding
+                                    <span class="video-duration">21:20</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/periodic-table" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    The Periodic Table
+                                    <span class="video-duration">18:50</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/chemical-reactions" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Chemical Reactions and Equations
+                                    <span class="video-duration">25:10</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="topic-card fade-in" data-topic="physics">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-magnet topic-icon"></i>
+                            Physics
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/mechanics" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Classical Mechanics
+                                    <span class="video-duration">26:40</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/thermodynamics" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Thermodynamics and Heat
+                                    <span class="video-duration">23:15</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/electromagnetism" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Electromagnetism
+                                    <span class="video-duration">28:30</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="topic-card fade-in" data-topic="earth science">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-globe-americas topic-icon"></i>
+                            Earth Science
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/plate-tectonics" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Plate Tectonics and Earthquakes
+                                    <span class="video-duration">20:45</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/weather-climate" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Weather and Climate Systems
+                                    <span class="video-duration">22:30</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/rock-cycle" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    The Rock Cycle and Minerals
+                                    <span class="video-duration">17:55</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="topic-card fade-in" data-topic="astronomy">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-rocket topic-icon"></i>
+                            Astronomy
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/solar-system" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Our Solar System
+                                    <span class="video-duration">24:20</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/stars-galaxies" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Stars and Galaxies
+                                    <span class="video-duration">27:15</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/big-bang" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    The Big Bang Theory
+                                    <span class="video-duration">21:40</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="topic-card fade-in" data-topic="environmental science">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-leaf topic-icon"></i>
+                            Environmental Science
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/ecosystems" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Ecosystems and Biodiversity
+                                    <span class="video-duration">19:25</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/climate-change" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Climate Change and Global Warming
+                                    <span class="video-duration">23:50</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/pollution" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Pollution and Conservation
+                                    <span class="video-duration">20:15</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="topic-card fade-in" data-topic="technology">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-microchip topic-icon"></i>
+                            Technology & Innovation
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/artificial-intelligence" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Artificial Intelligence Basics
+                                    <span class="video-duration">25:30</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/renewable-energy" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Renewable Energy Technologies
+                                    <span class="video-duration">22:45</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/biotechnology" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Biotechnology and Medicine
+                                    <span class="video-duration">26:10</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <div class="no-results" id="noResults">
+                <i class="fas fa-search"></i>
+                <p>No topics found matching your search.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Back to Dashboard Button -->
+    <button class="back-dashboard-btn" onclick="window.location.href='{% url 'dashboard' %}'">
+        <i class="fas fa-tachometer-alt"></i>
+        Back to Dashboard
+    </button>
+
+    <script>
+        $(document).ready(function() {
+            // Accordion functionality
+            $('.topic-header').click(function() {
+                const $header = $(this);
+                const $content = $header.next('.topic-content');
+                const $card = $header.parent('.topic-card');
+                
+                // Close other open topics
+                $('.topic-header').not($header).removeClass('active');
+                $('.topic-content').not($content).slideUp(300);
+                
+                // Toggle current topic
+                $header.toggleClass('active');
+                $content.slideToggle(300, function() {
+                    if ($content.is(':visible')) {
+                        $content.addClass('slide-down');
+                    }
+                });
+            });
+
+            // Search functionality
+            $('#searchInput').on('input', function() {
+                const searchTerm = $(this).val().toLowerCase();
+                let visibleCount = 0;
+                
+                $('.topic-card').each(function() {
+                    const topicName = $(this).data('topic').toLowerCase();
+                    const topicText = $(this).find('.topic-title').text().toLowerCase();
+                    
+                    if (topicName.includes(searchTerm) || topicText.includes(searchTerm)) {
+                        $(this).show().addClass('fade-in');
+                        visibleCount++;
+                    } else {
+                        $(this).hide().removeClass('fade-in');
+                    }
+                });
+                
+                // Show/hide no results message
+                if (visibleCount === 0 && searchTerm !== '') {
+                    $('#noResults').show();
+                } else {
+                    $('#noResults').hide();
+                }
+            });
+
+            // Smooth scroll for video links
+            $('.video-link').click(function(e) {
+                e.preventDefault();
+                const href = $(this).attr('href');
+                
+                // Add visual feedback
+                $(this).parent().css('transform', 'scale(0.98)');
+                setTimeout(() => {
+                    $(this).parent().css('transform', 'scale(1)');
+                }, 150);
+                
+                // Simulate opening video
+                setTimeout(() => {
+                    alert(`Opening video: ${$(this).text().trim()}\nURL: ${href}`);
+                }, 200);
+            });
+
+            // Add stagger animation to topic cards
+            $('.topic-card').each(function(index) {
+                $(this).css('animation-delay', (index * 0.1) + 's');
+            });
+
+            // Header scroll effect
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 50) {
+                    $('.header').css('background', 'rgba(255, 255, 255, 0.98)');
+                } else {
+                    $('.header').css('background', 'rgba(255, 255, 255, 0.95)');
+                }
+            });
+
+            // Add hover sound effect simulation
+            $('.topic-header, .video-item').hover(
+                function() {
+                    $(this).css('transition', 'all 0.2s ease');
+                },
+                function() {
+                    $(this).css('transition', 'all 0.3s ease');
+                }
+            );
+        });
+    </script>
+</body>
+</html>

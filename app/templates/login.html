@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YG Academy - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #667eea, #764ba2, #6B46C1);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Back to Home Button */
+        .back-home-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .back-home-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .back-home-btn i {
+            font-size: 16px;
+        }
+
+        /* Brand Header */
+        .brand-header {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 8px 32px rgba(79, 70, 229, 0.3);
+        }
+
+        .brand-text {
+            color: white;
+            text-align: left;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+            background: linear-gradient(135deg, #fff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .brand-tagline {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .container {
+            position: relative;
+            width: 768px;
+            max-width: 90%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(25px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 40px;
+            transform-style: preserve-3d;
+            transition: transform 0.5s, box-shadow 0.5s;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .form-title {
+            color: #fff;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1.2rem 1rem 1.2rem 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.25);
+            transform: scale(1.02);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(45deg, #764ba2, #667eea);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .signup-link a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+            color: #667eea;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .show-password:hover {
+            color: rgba(255, 255, 255, 1);
+        }
+
+        @media (max-width: 768px) {
+            .brand-header {
+                position: static;
+                display: flex;
+                justify-content: center;
+                margin: 20px 0;
+            }
+
+            .logo-container {
+                padding: 12px 20px;
+            }
+
+            .brand-name {
+                font-size: 1.3rem;
+            }
+
+            .container {
+                padding: 30px;
+                margin: 20px 10px;
+            }
+            
+            .form-title {
+                font-size: 2rem;
+            }
+
+            .back-home-btn {
+                top: 20px;
+                left: 20px;
+                padding: 10px 16px;
+            }
+
+            .back-home-btn span {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 10px;
+                padding: 25px 20px;
+            }
+
+            .form-title {
+                font-size: 1.8rem;
+            }
+
+            .form-input {
+                padding: 1rem 0.8rem 1rem 2.5rem;
+            }
+
+            .input-icon {
+                left: 1rem;
+            }
+
+            .logo-container {
+                gap: 10px;
+                padding: 10px 15px;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .brand-name {
+                font-size: 1.1rem;
+            }
+
+            .brand-tagline {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back to Home Button -->
+    <button class="back-home-btn" onclick="window.location.href='{% url 'home' %}'">
+        <i class="fas fa-home"></i>
+        <span>Back Home</span>
+    </button>
+
+    <!-- Platform Logo/Brand -->
+    <div class="brand-header">
+        <div class="logo-container">
+            <div class="logo-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="brand-text">
+                <h1 class="brand-name">YG ACADEMY</h1>
+                <p class="brand-tagline">Empowering Your Learning Journey</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            <h1 class="form-title">Welcome Back</h1>
+
+            <div class="form-group">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" class="form-input" placeholder="Username" name="username" required>
+            </div>
+
+            <div class="form-group password-container">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" class="form-input" placeholder="Password" name="password" id="password" required>
+                <span class="show-password" onclick="togglePassword()">
+                    <i class="fas fa-eye" id="eye-icon"></i>
+                </span>
+            </div>
+
+            <button type="submit" class="submit-btn">Sign In</button>
+
+            <p class="signup-link">
+                Don't have an account? <a href="{% url 'signup' %}">Create account</a>
+            </p>
+            <br>
+            <p class="signup-link">
+                Forgot password? <a href="{% url 'forget' %}">Click here</a>
+            </p>
+            <p class="signup-link">
+                <a href="{% url 'password_reset' %}"><i>Forgot Password?</i></a>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const password = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            if (password.type === 'password') {
+                password.type = 'text';
+                eyeIcon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                password.type = 'password';
+                eyeIcon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% if error %}
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Login Error',
+            text: "{{ error }}",
+            background: 'rgba(255, 255, 255, 0.95)',
+            backdrop: 'rgba(0, 0, 0, 0.4)',
+            confirmButtonColor: '#667eea',
+            customClass: {
+                popup: 'custom-swal-popup',
+                title: 'custom-swal-title'
+            }
+        });
+    </script>
+    {% endif %}
+</body>
+</html>

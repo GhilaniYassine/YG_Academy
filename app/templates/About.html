@@ -1,0 +1,485 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="YG ACADEMY, e-learning, online education, about us, mission, vision, educational platform">
+    <meta name="description" content="Learn about YG ACADEMY - Empowering Learners with Quality E-Learning. The Leading E-Learning Platform with years of experience and expert-led courses.">
+    <title>About Us - YG ACADEMY</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover { 
+            transition: all 0.3s ease; 
+            transform: translateY(0);
+        }
+        .card-hover:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15); 
+        }
+        .hero-pattern {
+            background-image: radial-gradient(circle at 25px 25px, rgba(255,255,255,0.05) 2px, transparent 0);
+            background-size: 50px 50px;
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .hero-backdrop {
+            background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+            backdrop-filter: blur(1px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between py-4">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <img src="{% static 'images/1.png' %}" alt="YG ACADEMY" class="h-12 w-12 rounded-full">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800 font-poppins">YG ACADEMY</h1>
+                        <p class="text-sm text-gray-600">Learn. Grow. Succeed.</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center space-x-8">
+                    <a href="{% url 'home' %}" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Home</a>
+                    <a href="{% url 'about' %}" class="text-blue-600 font-medium border-b-2 border-blue-600">About Us</a>
+                    <a href="{% url 'teachers' %}" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Our Teachers</a>
+                    <a href="{% url 'content' %}" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Our Content</a>
+                    <a href="{% url 'contact' %}" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Contact Us</a>
+                </nav>
+
+                <!-- Auth Buttons -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <a href="{% url 'login' %}" class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors">Login</a>
+                    <a href="{% url 'signup' %}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Register</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden p-2" id="mobile-menu-btn">
+                    <i class="fas fa-bars text-2xl text-gray-700"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="lg:hidden hidden" id="mobile-menu">
+                <div class="py-4 border-t bg-white">
+                    <div class="flex flex-col space-y-4">
+                        <a href="{% url 'home' %}" class="text-gray-700 hover:text-blue-600 font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors">Home</a>
+                        <a href="{% url 'about' %}" class="text-blue-600 font-medium px-4 py-2 rounded-lg bg-blue-50">About Us</a>
+                        <a href="{% url 'teachers' %}" class="text-gray-700 hover:text-blue-600 font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors">Our Teachers</a>
+                        <a href="{% url 'content' %}" class="text-gray-700 hover:text-blue-600 font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors">Our Content</a>
+                        <a href="{% url 'contact' %}" class="text-gray-700 hover:text-blue-600 font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors">Contact Us</a>
+                        <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 pt-4 px-4">
+                            <a href="{% url 'login' %}" class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg text-center hover:bg-blue-50 transition-colors">Login</a>
+                            <a href="{% url 'signup' %}" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-center hover:bg-blue-700 transition-colors">Register</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg hero-pattern text-white py-20 lg:py-32 relative overflow-hidden">
+        <!-- Enhanced background overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center">
+                <!-- Content -->
+                <div class="lg:w-1/2 mb-12 lg:mb-0 animate-fade-in">
+                    <div class="mb-8">
+                        <span class="bg-white bg-opacity-30 text-white px-6 py-3 rounded-full text-sm font-bold tracking-wide uppercase shadow-lg backdrop-blur-sm border border-white border-opacity-20">
+                            About YG ACADEMY
+                        </span>
+                    </div>
+                    <h1 class="text-5xl lg:text-7xl font-bold font-poppins mb-8 leading-tight hero-text-shadow">
+                        Empowering Your Educational Journey
+                    </h1>
+                    <div class="hero-backdrop rounded-2xl p-6 mb-8">
+                        <p class="text-xl lg:text-2xl leading-relaxed font-medium">
+                            We are a passionate team dedicated to education, aiming to provide exceptional content that helps you learn and grow. Join us today and become part of our educational journey!
+                        </p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                        <a href="{% url 'signup' %}" class="bg-white text-blue-600 px-10 py-5 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 text-center shadow-2xl transform hover:scale-105">
+                            Start Learning Now
+                        </a>
+                        <a href="{% url 'contact' %}" class="border-3 border-white text-white px-10 py-5 rounded-xl font-bold text-lg hover:bg-white hover:text-blue-600 transition-all duration-300 text-center shadow-xl transform hover:scale-105">
+                            Get In Touch
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Image -->
+                <div class="lg:w-1/2 flex justify-center">
+                    <div class="relative animate-float">
+                        <div class="w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl border-8 border-white border-opacity-30">
+                            <img src="{% static 'images/ddd.jpg' %}" alt="About YG ACADEMY" class="w-full h-full object-cover">
+                        </div>
+                        <!-- Enhanced floating elements -->
+                        <div class="absolute -top-4 -right-4 w-20 h-20 bg-white bg-opacity-25 rounded-full flex items-center justify-center shadow-xl backdrop-blur-sm">
+                            <i class="fas fa-graduation-cap text-3xl text-white"></i>
+                        </div>
+                        <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-white bg-opacity-25 rounded-full flex items-center justify-center shadow-xl backdrop-blur-sm">
+                            <i class="fas fa-book text-xl text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 font-poppins mb-4">Our Core Values</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Discover what drives us to deliver exceptional educational experiences and support your learning journey.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Strategy -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-gray-100">
+                    <div class="text-center">
+                        <div class="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                            <div class="absolute inset-0 bg-blue-500 rounded-full opacity-20 animate-pulse"></div>
+                            <i class="fas fa-chess text-3xl text-blue-600 relative z-10"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Strategy</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            YG ACADEMY's strategy focuses on personalized learning, industry-relevant courses, and community-driven engagement to enhance skill development.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Mission -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-gray-100">
+                    <div class="text-center">
+                        <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                            <div class="absolute inset-0 bg-green-500 rounded-full opacity-20 animate-pulse"></div>
+                            <i class="fas fa-bullseye text-3xl text-green-600 relative z-10"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Mission</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            YG ACADEMY's mission is to make quality education accessible to everyone through innovative, flexible, and interactive e-learning solutions.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Development -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-gray-100">
+                    <div class="text-center">
+                        <div class="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                            <div class="absolute inset-0 bg-purple-500 rounded-full opacity-20 animate-pulse"></div>
+                            <i class="fas fa-rocket text-3xl text-purple-600 relative z-10"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Development</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            YG ACADEMY empowers students with skill development, career advancement, and practical knowledge through expert-led courses and certification programs.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Team -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg card-hover border border-gray-100">
+                    <div class="text-center">
+                        <div class="bg-orange-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                            <div class="absolute inset-0 bg-orange-500 rounded-full opacity-20 animate-pulse"></div>
+                            <i class="fas fa-users text-3xl text-orange-600 relative z-10"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Expert Team</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            YG ACADEMY's teaching team consists of experienced professionals and industry experts dedicated to delivering high-quality, engaging learning experiences.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- Content -->
+                    <div>
+                        <h2 class="text-4xl font-bold text-gray-800 font-poppins mb-6">
+                            Why Choose YG ACADEMY?
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                            We're committed to providing world-class education that adapts to your needs and helps you achieve your goals.
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-blue-100 p-3 rounded-full flex-shrink-0">
+                                    <i class="fas fa-check text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-2">Expert Instructors</h4>
+                                    <p class="text-gray-600">Learn from industry professionals with years of real-world experience.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-green-100 p-3 rounded-full flex-shrink-0">
+                                    <i class="fas fa-check text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-2">Flexible Learning</h4>
+                                    <p class="text-gray-600">Study at your own pace with 24/7 access to course materials.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-purple-100 p-3 rounded-full flex-shrink-0">
+                                    <i class="fas fa-check text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-2">Interactive Content</h4>
+                                    <p class="text-gray-600">Engage with multimedia content, quizzes, and hands-on projects.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-orange-100 p-3 rounded-full flex-shrink-0">
+                                    <i class="fas fa-check text-orange-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 mb-2">Certification</h4>
+                                    <p class="text-gray-600">Earn recognized certificates to boost your career prospects.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="bg-white rounded-2xl p-6 shadow-lg text-center card-hover">
+                            <div class="text-4xl font-bold text-blue-600 mb-2">5+</div>
+                            <div class="text-gray-600">Years Experience</div>
+                        </div>
+                        <div class="bg-white rounded-2xl p-6 shadow-lg text-center card-hover">
+                            <div class="text-4xl font-bold text-green-600 mb-2">1000+</div>
+                            <div class="text-gray-600">Students Taught</div>
+                        </div>
+                        <div class="bg-white rounded-2xl p-6 shadow-lg text-center card-hover">
+                            <div class="text-4xl font-bold text-purple-600 mb-2">50+</div>
+                            <div class="text-gray-600">Courses Available</div>
+                        </div>
+                        <div class="bg-white rounded-2xl p-6 shadow-lg text-center card-hover">
+                            <div class="text-4xl font-bold text-orange-600 mb-2">98%</div>
+                            <div class="text-gray-600">Success Rate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 gradient-bg text-white">
+        <div class="container mx-auto px-4 text-center">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-4xl font-bold font-poppins mb-6">
+                    Ready to Start Your Learning Journey?
+                </h2>
+                <p class="text-xl mb-8 opacity-90">
+                    Join thousands of students who have transformed their careers with YG ACADEMY. Start learning today!
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="{% url 'signup' %}" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                        Get Started Now
+                    </a>
+                    <a href="{% url 'content' %}" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+                        Browse Courses
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="{% static 'images/1.png' %}" alt="YG ACADEMY" class="h-10 w-10 rounded-full">
+                        <h3 class="text-2xl font-bold font-poppins">YG ACADEMY</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Empowering students through innovative online education and personalized learning experiences.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{% url 'home' %}" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="{% url 'about' %}" class="text-gray-300 hover:text-white transition-colors">About</a></li>
+                        <li><a href="{% url 'content' %}" class="text-gray-300 hover:text-white transition-colors">Courses</a></li>
+                        <li><a href="{% url 'teachers' %}" class="text-gray-300 hover:text-white transition-colors">Teachers</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><i class="fas fa-envelope mr-2"></i>info@tunisiaacademy.com</li>
+                        <li><i class="fas fa-phone mr-2"></i>+216 XX XXX XXX</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>Tunisia</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-300">&copy; 2024 YG ACADEMY. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const icon = this.querySelector('i');
+            
+            mobileMenu.classList.toggle('hidden');
+            
+            // Toggle hamburger/close icon
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            }
+        });
+
+        // Back to top functionality
+        const backToTopBtn = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.remove('opacity-0', 'invisible');
+                backToTopBtn.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'invisible');
+                backToTopBtn.classList.remove('opacity-100', 'visible');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards for animation
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(card);
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            
+            if (!mobileMenu.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
+                mobileMenu.classList.add('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Add loading animation
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+</html>

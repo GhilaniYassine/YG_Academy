@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Learning Hub</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #4B0082 0%, #8A2BE2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4B0082, #8A2BE2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .search-container {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+            margin: 0 2rem;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 20px 12px 50px;
+            border: 2px solid #e1e5e9;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #4B0082;
+            box-shadow: 0 0 0 3px rgba(75, 0, 130, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4B0082;
+            font-size: 18px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 3rem 0;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Topics Grid */
+        .topics-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .topic-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+        }
+
+        .topic-header {
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #f8f0ff, #f0e6ff);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, #4B0082, #8A2BE2);
+            transition: width 0.3s ease;
+        }
+
+        .topic-header:hover::before {
+            width: 8px;
+        }
+
+        .topic-header.active {
+            background: linear-gradient(135deg, #4B0082, #8A2BE2);
+            color: white;
+        }
+
+        .topic-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .topic-icon {
+            font-size: 1.5rem;
+            color: #4B0082;
+            transition: all 0.3s ease;
+        }
+
+        .topic-header.active .topic-icon {
+            color: white;
+        }
+
+        .expand-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: #4B0082;
+        }
+
+        .topic-header.active .expand-icon {
+            transform: rotate(180deg);
+            color: white;
+        }
+
+        .topic-content {
+            display: none;
+            padding: 0 2rem 2rem;
+            background: white;
+        }
+
+        .video-list {
+            list-style: none;
+        }
+
+        .video-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8f0ff;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .video-item:hover {
+            background: #f0e6ff;
+            border-left-color: #4B0082;
+            transform: translateX(5px);
+        }
+
+        .video-link {
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 500;
+        }
+
+        .video-link:hover {
+            color: #4B0082;
+        }
+
+        .play-icon {
+            color: #4B0082;
+            font-size: 1.2rem;
+        }
+
+        .video-duration {
+            margin-left: auto;
+            color: #666;
+            font-size: 0.9rem;
+            background: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-container {
+                margin: 0;
+                max-width: 100%;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .topic-header {
+                padding: 1rem 1.5rem;
+            }
+
+            .topic-title {
+                font-size: 1.2rem;
+            }
+
+            .topic-content {
+                padding: 0 1.5rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .topic-header {
+                padding: 1rem;
+            }
+
+            .topic-content {
+                padding: 0 1rem 1rem;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-down {
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 500px;
+            }
+        }
+
+        /* No results message */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: white;
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        /* Back to Dashboard Button */
+        .back-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: linear-gradient(135deg, #4B0082 0%, #8A2BE2 100%);
+            color: white;
+            border: none;
+            padding: 16px 22px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(75, 0, 130, 0.4);
+        }
+
+        .back-button i {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover i {
+            transform: translateX(-3px);
+        }
+
+        /* Responsive adjustments for back button */
+        @media (max-width: 768px) {
+            .back-button {
+                bottom: 20px;
+                left: 20px;
+                padding: 14px 18px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-atom"></i> Physics Learning Hub
+                </div>
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-box" placeholder="Search physics topics..." id="searchInput">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="hero-section">
+                <h1 class="hero-title">Master Physics</h1>
+                <p class="hero-subtitle">Unlock the mysteries of the universe through comprehensive physics education</p>
+            </section>
+
+            <section class="topics-grid" id="topicsGrid">
+                <div class="topic-card fade-in" data-topic="classical mechanics">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-cog topic-icon"></i>
+                            Classical Mechanics
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/kinematics" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Kinematics and Motion
+                                    <span class="video-duration">22:15</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/forces-laws" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Forces and Newton's Laws
+                                    <span class="video-duration">25:30</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/energy-momentum" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Energy and Momentum
+                                    <span class="video-duration">28:45</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="topic-card fade-in" data-topic="thermodynamics">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-thermometer-half topic-icon"></i>
+                            Thermodynamics
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/heat-temperature" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Heat and Temperature
+                                    <span class="video-duration">19:40</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/laws-thermodynamics" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Laws of Thermodynamics
+                                    <span class="video-duration">24:20</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/entropy" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Entropy and Statistical Mechanics
+                                    <span class="video-duration">21:55</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="topic-card fade-in" data-topic="electromagnetism">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-bolt topic-icon"></i>
+                            Electromagnetism
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/electric-fields" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Electric Fields and Charges
+                                    <span class="video-duration">23:10</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/magnetic-fields" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Magnetic Fields and Forces
+                                    <span class="video-duration">26:35</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/maxwell-equations" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Maxwell's Equations
+                                    <span class="video-duration">30:15</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="topic-card fade-in" data-topic="waves and optics">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-wave-square topic-icon"></i>
+                            Waves and Optics
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/wave-properties" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Wave Properties and Behavior
+                                    <span class="video-duration">20:25</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/light-reflection" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Light, Reflection, and Refraction
+                                    <span class="video-duration">22:40</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/interference-diffraction" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Interference and Diffraction
+                                    <span class="video-duration">25:50</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="topic-card fade-in" data-topic="quantum physics">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-atom topic-icon"></i>
+                            Quantum Physics
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/quantum-basics" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Introduction to Quantum Mechanics
+                                    <span class="video-duration">27:30</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/wave-particle-duality" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Wave-Particle Duality
+                                    <span class="video-duration">24:15</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/uncertainty-principle" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Heisenberg Uncertainty Principle
+                                    <span class="video-duration">21:45</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="topic-card fade-in" data-topic="relativity">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-rocket topic-icon"></i>
+                            Relativity
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/special-relativity" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Special Theory of Relativity
+                                    <span class="video-duration">29:20</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/general-relativity" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    General Theory of Relativity
+                                    <span class="video-duration">32:45</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/spacetime" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Spacetime and Gravity
+                                    <span class="video-duration">26:10</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="topic-card fade-in" data-topic="nuclear physics">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-radiation topic-icon"></i>
+                            Nuclear Physics
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/atomic-nucleus" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    The Atomic Nucleus
+                                    <span class="video-duration">23:35</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/radioactivity" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Radioactivity and Decay
+                                    <span class="video-duration">25:20</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/nuclear-reactions" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Nuclear Reactions and Energy
+                                    <span class="video-duration">28:15</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="topic-card fade-in" data-topic="astrophysics">
+                    <div class="topic-header">
+                        <div class="topic-title">
+                            <i class="fas fa-star topic-icon"></i>
+                            Astrophysics
+                        </div>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <div class="topic-content">
+                        <ul class="video-list">
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/stellar-evolution" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Stellar Evolution and Life Cycles
+                                    <span class="video-duration">31:40</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/black-holes" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Black Holes and Neutron Stars
+                                    <span class="video-duration">27:55</span>
+                                </a>
+                            </li>
+                            <li class="video-item">
+                                <a href="https://elearn.example.com/cosmology" class="video-link">
+                                    <i class="fas fa-play play-icon"></i>
+                                    Cosmology and the Universe
+                                    <span class="video-duration">34:20</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <div class="no-results" id="noResults">
+                <i class="fas fa-search"></i>
+                <p>No topics found matching your search.</p>
+            </div>
+            
+            <!-- Back to Dashboard Button -->
+            <a href="{%url 'dashboard'%}" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Back to Dashboard
+            </a>
+        </div>
+    </main>
+
+    <script>
+        $(document).ready(function() {
+            // Accordion functionality
+            $('.topic-header').click(function() {
+                const $header = $(this);
+                const $content = $header.next('.topic-content');
+                const $card = $header.parent('.topic-card');
+                
+                // Close other open topics
+                $('.topic-header').not($header).removeClass('active');
+                $('.topic-content').not($content).slideUp(300);
+                
+                // Toggle current topic
+                $header.toggleClass('active');
+                $content.slideToggle(300, function() {
+                    if ($content.is(':visible')) {
+                        $content.addClass('slide-down');
+                    }
+                });
+            });
+
+            // Search functionality
+            $('#searchInput').on('input', function() {
+                const searchTerm = $(this).val().toLowerCase();
+                let visibleCount = 0;
+                
+                $('.topic-card').each(function() {
+                    const topicName = $(this).data('topic').toLowerCase();
+                    const topicText = $(this).find('.topic-title').text().toLowerCase();
+                    
+                    if (topicName.includes(searchTerm) || topicText.includes(searchTerm)) {
+                        $(this).show().addClass('fade-in');
+                        visibleCount++;
+                    } else {
+                        $(this).hide().removeClass('fade-in');
+                    }
+                });
+                
+                // Show/hide no results message
+                if (visibleCount === 0 && searchTerm !== '') {
+                    $('#noResults').show();
+                } else {
+                    $('#noResults').hide();
+                }
+            });
+
+            // Smooth scroll for video links
+            $('.video-link').click(function(e) {
+                e.preventDefault();
+                const href = $(this).attr('href');
+                
+                // Add visual feedback
+                $(this).parent().css('transform', 'scale(0.98)');
+                setTimeout(() => {
+                    $(this).parent().css('transform', 'scale(1)');
+                }, 150);
+                
+                // Simulate opening video
+                setTimeout(() => {
+                    alert(`Opening video: ${$(this).text().trim()}\nURL: ${href}`);
+                }, 200);
+            });
+
+            // Add stagger animation to topic cards
+            $('.topic-card').each(function(index) {
+                $(this).css('animation-delay', (index * 0.1) + 's');
+            });
+
+            // Header scroll effect
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 50) {
+                    $('.header').css('background', 'rgba(255, 255, 255, 0.98)');
+                } else {
+                    $('.header').css('background', 'rgba(255, 255, 255, 0.95)');
+                }
+            });
+
+            // Add hover sound effect simulation
+            $('.topic-header, .video-item').hover(
+                function() {
+                    $(this).css('transition', 'all 0.2s ease');
+                },
+                function() {
+                    $(this).css('transition', 'all 0.3s ease');
+                }
+            );
+        });
+    </script>
+</body>
+</html>

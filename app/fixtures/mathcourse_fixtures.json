@@ -1,0 +1,206 @@
+[
+    {
+        "model": "app.mathcourse",
+        "pk": 1,
+        "fields": {
+            "name_of_course": "Algebra",
+            "name_of_chapter": "Chapter 1: Introduction",
+            "video_title": "What is Algebra? Key Concepts",
+            "video_url": "https://www.youtube.com/watch?v=abc1",
+            "video_duration": "10:05",
+            "description": "Overview of variables, constants, and basic operations.",
+            "order": 1,
+            "is_active": true,
+            "created_by": 1,
+            "created_at": "2025-07-01T08:00:00Z",
+            "updated_at": "2025-07-01T08:00:00Z"
+        }
+    },
+    {
+        "model": "app.mathcourse",
+        "pk": 2,
+        "fields": {
+            "name_of_course": "Algebra",
+            "name_of_chapter": "Chapter 1: Introduction",
+            "video_title": "Solving Linear Equations",
+            "video_url": "https://www.youtube.com/watch?v=abc2",
+            "video_duration": "15:30",
+            "description": "Step\u2011by\u2011step methods to solve single\u2011variable linear equations.",
+            "order": 2,
+            "is_active": true,
+            "created_by": 1,
+            "created_at": "2025-07-01T09:00:00Z",
+            "updated_at": "2025-07-01T09:00:00Z"
+        }
+    },
+    {
+        "model": "app.mathcourse",
+        "pk": 3,
+        "fields": {
+            "name_of_course": "Algebra",
+            "name_of_chapter": "Chapter 2: Quadratic Functions",
+            "video_title": "Graphing Parabolas",
+            "video_url": "https://www.youtube.com/watch?v=abc3",
+            "video_duration": "12:45",
+            "description": "How to sketch parabolas by finding vertex, axis of symmetry, and intercepts.",
+            "order": 1,
+            "is_active": true,
+            "created_by": 2,
+            "created_at": "2025-07-02T08:00:00Z",
+            "updated_at": "2025-07-02T08:00:00Z"
+        }
+    },
+    {
+        "model": "app.mathcourse",
+        "pk": 4,
+        "fields": {
+            "name_of_course": "Algebra",
+            "name_of_chapter": "Chapter 2: Quadratic Functions",
+            "video_title": "The Quadratic Formula",
+            "video_url": "https://www.youtube.com/watch?v=abc4",
+            "video_duration": "14:20",
+            "description": "Using the quadratic formula to find real and complex roots.",
+            "order": 2,
+            "is_active": true,
+            "created_by": 2,
+            "created_at": "2025-07-02T09:00:00Z",
+            "updated_at": "2025-07-02T09:00:00Z"
+        }
+    },
+    {
+        "model": "app.mathcourse",
+        "pk": 5,
+        "fields": {
+            "name_of_course": "Calculus",
+            "name_of_chapter": "Chapter 1: Limits",
+            "video_title": "Understanding Limits Intuitively",
+            "video_url": "https://www.youtube.com/watch?v=abc5",
+            "video_duration": "11:10",
+            "description": "Visual approach to the concept of a limit and notation.",
+            "order": 1,
+            "is_active": true,
+            "created_by": 3,
+            "created_at": "2025-07-03T08:00:00Z",
+            "updated_at": "2025-07-03T08:00:00Z"
+        }
+    },
+    {
+        "model": "app.mathcourse",
+        "pk": 6,
+        "fields": {
+            "name_of_course": "Calculus",
+            "name_of_chapter": "Chapter 1: Limits",
+            "video_title": "Limit Laws and Algebraic Techniques",
+            "video_url": "https://www.youtube.com/watch?v=abc6",
+            "video_duration": "13:25",
+            "description": "Applying limit laws to compute limits analytically.",
+            "order": 2,
+            "is_active": true,
+            "created_by": 3,
+            "created_at": "2025-07-03T09:30:00Z",
+            "updated_at": "2025-07-03T09:30:00Z"
+        }
+    },
+    {
+        "model": "app.mathcourse",
+        "pk": 7,
+        "fields": {
+            "name_of_course": "Calculus",
+            "name_of_chapter": "Chapter 2: Derivatives",
+            "video_title": "Derivative as an Instantaneous Rate of Change",
+            "video_url": "https://www.youtube.com/watch?v=abc7",
+            "video_duration": "16:00",
+            "description": "Relating derivatives to slopes of tangent lines and velocity.",
+            "order": 1,
+            "is_active": true,
+            "created_by": 4,
+            "created_at": "2025-07-03T10:15:00Z",
+            "updated_at": "2025-07-03T10:15:00Z"
+        }
+    },
+    {
+        "model": "app.mathcourse",
+        "pk": 8,
+        "fields": {
+            "name_of_course": "Calculus",
+            "name_of_chapter": "Chapter 2: Derivatives",
+            "video_title": "Rules of Differentiation",
+            "video_url": "https://www.youtube.com/watch?v=abc8",
+            "video_duration": "18:40",
+            "description": "Power, product, quotient, and chain rules with examples.",
+            "order": 2,
+            "is_active": true,
+            "created_by": 4,
+            "created_at": "2025-07-03T11:00:00Z",
+            "updated_at": "2025-07-03T11:00:00Z"
+        }
+    },
+    {
+        "model": "app.mathcourse",
+        "pk": 9,
+        "fields": {
+            "name_of_course": "Geometry",
+            "name_of_chapter": "Chapter 1: Basics of Geometry",
+            "video_title": "Points, Lines, and Planes",
+            "video_url": "https://www.youtube.com/watch?v=abc9",
+            "video_duration": "09:50",
+            "description": "Fundamental undefined terms and their properties.",
+            "order": 1,
+            "is_active": true,
+            "created_by": 5,
+            "created_at": "2025-07-04T08:00:00Z",
+            "updated_at": "2025-07-04T08:00:00Z"
+        }
+    },
+    {
+        "model": "app.mathcourse",
+        "pk": 10,
+        "fields": {
+            "name_of_course": "Geometry",
+            "name_of_chapter": "Chapter 1: Basics of Geometry",
+            "video_title": "Measuring Line Segments",
+            "video_url": "https://www.youtube.com/watch?v=abc10",
+            "video_duration": "11:05",
+            "description": "Using a ruler postulate to determine lengths and midpoints.",
+            "order": 2,
+            "is_active": true,
+            "created_by": 5,
+            "created_at": "2025-07-04T09:00:00Z",
+            "updated_at": "2025-07-04T09:00:00Z"
+        }
+    },
+    {
+        "model": "app.mathcourse",
+        "pk": 11,
+        "fields": {
+            "name_of_course": "Geometry",
+            "name_of_chapter": "Chapter 2: Angles",
+            "video_title": "Classifying Angles",
+            "video_url": "https://www.youtube.com/watch?v=abc11",
+            "video_duration": "08:30",
+            "description": "Acute, right, obtuse, and straight angles explained.",
+            "order": 1,
+            "is_active": true,
+            "created_by": 6,
+            "created_at": "2025-07-04T10:15:00Z",
+            "updated_at": "2025-07-04T10:15:00Z"
+        }
+    },
+    {
+        "model": "app.mathcourse",
+        "pk": 12,
+        "fields": {
+            "name_of_course": "Geometry",
+            "name_of_chapter": "Chapter 2: Angles",
+            "video_title": "Complementary and Supplementary Angles",
+            "video_url": "https://www.youtube.com/watch?v=abc12",
+            "video_duration": "12:00",
+            "description": "Identifying and working with complementary and supplementary pairs.",
+            "order": 2,
+            "is_active": true,
+            "created_by": 6,
+            "created_at": "2025-07-04T11:00:00Z",
+            "updated_at": "2025-07-04T11:00:00Z"
+        }
+    }
+]

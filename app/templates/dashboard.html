@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YG ACADEMY</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <span class="logo-text">YG ACADEMY</span>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="nav">
+                    <a href="#subjects" class="nav-item active" id="subjectsLink">
+                        <i class="fas fa-book"></i>
+                        Subjects
+                    </a>
+                    <a href="{% url 'dashboard' %}" class="nav-item">
+                        <i class="fas fa-user"></i>
+                        Profile
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-key"></i>
+                        Change Password
+                    </a>
+                </nav>
+
+                <!-- User Profile -->
+                <div class="user-profile">
+                    <div class="user-info">
+                        <span class="user-name">Hello, {{ user.username }}</span>
+                        <span class="user-role">Student</span>
+                    </div>
+                    <div class="user-avatar">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="{{ user.username }}">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-wrapper">
+                <h1 class="page-title">My Subjects</h1>
+                <p class="page-subtitle">Continue learning with your enrolled courses</p>
+
+                <!-- Subjects Grid -->
+                <div class="subjects-grid" id="subjects">
+                    <!-- Mathematics Card -->
+                    <div class="subject-card">
+                        <div class="card-header">
+                            <span class="status-badge in-progress">IN PROGRESS</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Mathematics</h3>
+                            <p class="card-description">Explore the world of numbers, from algebra to calculus.</p>
+                            <a href="{% url  'math' %}" class="btn">Go to Mathematics</a>
+                        </div>
+                    </div>
+
+                    <!-- Physics Card -->
+                    <div class="subject-card">
+                        <div class="card-header">
+                            <span class="status-badge in-progress">IN PROGRESS</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Physics</h3>
+                            <p class="card-description">Discover the fundamental laws of matter, energy, and motion.</p>
+                            <a href="{% url 'physics' %}" class="btn">Go to Physics</a>
+                        </div>
+                    </div>
+
+                    <!-- World History Card -->
+                    <div class="subject-card">
+                        <div class="card-header">
+                            <span class="status-badge in-progress">IN PROGRESS</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">History</h3>
+                            <p class="card-description">Journey through time and discover the stories of our past.</p>
+                            <a href="{% url  'history' %}" class="btn">Go to History</a>
+                        </div>
+                    </div>
+
+                    <!-- Science Card -->
+                    <div class="subject-card">
+                        <div class="card-header">
+                            <span class="status-badge in-progress">IN PROGRESS</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Science</h3>
+                            <p class="card-description">Understand the principles of the natural world.</p>
+                            <a href="{% url  'science' %}" class="btn">Go to Science</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Back to Home Button -->
+        <button class="back-home-btn" onclick="window.location.href='{% url 'home' %}'">
+            <i class="fas fa-home"></i>
+            Back Home
+        </button>
+
+        <!-- Floating Action Button -->
+        <button class="fab" id="fabButton">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+</html>

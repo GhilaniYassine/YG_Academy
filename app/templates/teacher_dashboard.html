@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - ELearn</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-btn {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .welcome {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .dashboard-header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .success-message, .error-message {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .video-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+
+        .video-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .video-info h4 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+
+        .video-info p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .navbar {
+                padding: 1rem;
+            }
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+        <div class="welcome">
+            Welcome, <strong>{{ user.username }}!</strong>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="dashboard-header">
+            <h1><i class="fas fa-chalkboard-teacher"></i> Teacher Dashboard</h1>
+            <p>Manage your Math courses and video content</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Add Math Video Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <h3 class="card-title">Add Math Video</h3>
+                </div>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="{% if message.tags == 'success' %}success-message{% else %}error-message{% endif %}" style="display: block;">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <form method="POST" action="{% url 'manage_math_videos' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="course_name">Course Name</label>
+                        <input type="text" id="course_name" name="course_name" class="form-control" 
+                               placeholder="e.g., Algebra, Calculus, Geometry" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="chapter_name">Chapter Name</label>
+                        <input type="text" id="chapter_name" name="chapter_name" class="form-control" 
+                               placeholder="e.g., Chapter 1: Introduction" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="video_title">Video Title</label>
+                        <input type="text" id="video_title" name="video_title" class="form-control" 
+                               placeholder="Enter descriptive video title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="video_url">Video URL</label>
+                        <input type="url" id="video_url" name="video_url" class="form-control" 
+                               placeholder="https://youtube.com/watch?v=..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="video_duration">Duration (MM:SS)</label>
+                        <input type="text" id="video_duration" name="video_duration" class="form-control" 
+                               placeholder="e.g., 15:30" pattern="[0-9]{1,2}:[0-9]{2}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="order">Order in Chapter</label>
+                        <input type="number" id="order" name="order" class="form-control" 
+                               placeholder="1" min="0" value="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" class="form-control" rows="3" 
+                                  placeholder="Brief description of the video content"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">
+                        <i class="fas fa-plus"></i>
+                        Add Video
+                    </button>
+                </form>
+            </div>
+
+            <!-- Manage Videos Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3 class="card-title">Your Math Videos</h3>
+                </div>
+                
+                <div class="video-list">
+                    {% for video in math_videos %}
+                    <div class="video-item">
+                        <div class="video-info">
+                            <h4>{{ video.video_title }}</h4>
+                            <p><strong>{{ video.name_of_course }}</strong> - {{ video.name_of_chapter }}</p>
+                            <p>Duration: {{ video.video_duration|default:"Not specified" }} | Order: {{ video.order }}</p>
+                            <p><small>Added: {{ video.created_at|date:"M d, Y" }}</small></p>
+                        </div>
+                        <a href="{% url 'delete_math_video' video.id %}" class="delete-btn" 
+                           onclick="return confirm('Are you sure you want to delete this video?')">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                    {% empty %}
+                    <p style="text-align: center; color: #666; padding: 2rem;">
+                        No videos added yet. Start by adding your first math video!
+                    </p>
+                    {% endfor %}
+                </div>
+                
+                {% if math_videos %}
+                <div style="margin-top: 1rem; text-align: center;">
+                    <a href="{% url 'math_courses' %}" class="btn" style="width: auto; display: inline-flex;">
+                        <i class="fas fa-eye"></i>
+                        View Student View
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Auto-hide success/error messages after 5 seconds
+            setTimeout(function() {
+                $('.success-message, .error-message').fadeOut();
+            }, 5000);
+            
+            // Form validation
+            $('form').on('submit', function(e) {
+                const url = $('#video_url').val();
+                if (url && !isValidURL(url)) {
+                    e.preventDefault();
+                    alert('Please enter a valid URL');
+                    $('#video_url').focus();
+                }
+            });
+            
+            function isValidURL(string) {
+                try {
+                    new URL(string);
+                    return true;
+                } catch (_) {
+                    return false;
+                }
+            }
+            
+            // Smooth animations
+            $('.card').each(function(index) {
+                $(this).css('animation-delay', (index * 0.1) + 's');
+            });
+        });
+    </script>
+</body>
+</html>

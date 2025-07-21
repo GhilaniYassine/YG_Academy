@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YG ACADEMY</title>
+    <link rel="stylesheet" href="{% static 'css/subject_unavailable.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <span class="logo-text">YG ACADEMY</span>
+                </div>
+
+                <!-- User Profile -->
+                <div class="user-profile">
+                    <div class="user-info">
+                        <span class="user-name">Hello, {{ user.username }}</span>
+                        <span class="user-role">Student</span>
+                    </div>
+                    <div class="user-avatar">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="{{ user.username }}">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-wrapper">
+                <!-- Access Denied Section -->
+                <div class="access-denied-section">
+                    <div class="lock-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h1 class="access-title">Subject Access Restricted</h1>
+                    <p class="access-subtitle">You don't have access to this subject material yet</p>
+                </div>
+
+                <!-- Subject Information -->
+                <div class="subject-info">
+                    <div class="subject-card">
+                        <div class="subject-header">
+                            <h2 class="subject-name">{{ subject_name|title }}</h2>
+                            <span class="subject-status locked">
+                                <i class="fas fa-lock"></i>
+                                Locked
+                            </span>
+                        </div>
+                        
+                        <div class="subject-description">
+                            <p>Unlock access to comprehensive {{ subject_name|lower }} materials including:</p>
+                            <ul class="features-list">
+                                <li><i class="fas fa-check-circle"></i> Interactive lessons and tutorials</li>
+                                <li><i class="fas fa-check-circle"></i> Practice exercises and quizzes</li>
+                                <li><i class="fas fa-check-circle"></i> Video lectures from expert teachers</li>
+                                <li><i class="fas fa-check-circle"></i> Downloadable resources and materials</li>
+                                <li><i class="fas fa-check-circle"></i> Progress tracking and certificates</li>
+                                <li><i class="fas fa-check-circle"></i> 24/7 student support</li>
+                            </ul>
+                        </div>
+
+                        <div class="pricing-section">
+                            <div class="price-tag">
+                                <span class="price-label">Full Access</span>
+                                <span class="price-amount">$29.99</span>
+                                <span class="price-period">/ month</span>
+                            </div>
+                            
+                            <div class="discount-badge">
+                                <span class="discount-text">50% OFF First Month!</span>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn-primary purchase-btn" id="purchaseBtn">
+                                <i class="fas fa-credit-card"></i>
+                                Purchase Subject Access
+                            </button>
+                            <button class="btn-secondary trial-btn" id="trialBtn">
+                                <i class="fas fa-play"></i>
+                                Start Free Trial
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alternative Options -->
+                <div class="alternative-options">
+                    <h3 class="options-title">Other Options</h3>
+                    <div class="options-grid">
+                        <div class="option-card">
+                            <i class="fas fa-users"></i>
+                            <h4>Contact Administrator</h4>
+                            <p>Request access from your school administrator</p>
+                            <a href="#" class="option-link">Contact Admin</a>
+                        </div>
+                        
+                        <div class="option-card">
+                            <i class="fas fa-book-open"></i>
+                            <h4>Browse Free Subjects</h4>
+                            <p>Explore other subjects available in your plan</p>
+                            <a href="{% url 'dashboard' %}" class="option-link">View Subjects</a>
+                        </div>
+                        
+                        <div class="option-card">
+                            <i class="fas fa-question-circle"></i>
+                            <h4>Need Help?</h4>
+                            <p>Get assistance with your account or billing</p>
+                            <a href="#" class="option-link">Get Support</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Back Button -->
+        <button class="back-btn" onclick="window.location.href='{% url 'dashboard' %}'">
+            <i class="fas fa-arrow-left"></i>
+            Back to Dashboard
+        </button>
+
+        <!-- Purchase Modal -->
+        <div class="modal-overlay" id="purchaseModal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>Purchase Subject Access</h3>
+                    <button class="modal-close" id="modalClose">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="purchase-summary">
+                        <h4>{{ subject_name|title }} Course Access</h4>
+                        <p>Full access to all course materials and features</p>
+                        <div class="price-breakdown">
+                            <div class="price-item">
+                                <span>Course Price:</span>
+                                <span>$29.99</span>
+                            </div>
+                            <div class="price-item discount">
+                                <span>First Month Discount (50%):</span>
+                                <span>-$14.99</span>
+                            </div>
+                            <div class="price-item total">
+                                <span>Total:</span>
+                                <span>$14.99</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="payment-form">
+                        <p>This is a demo. In a real application, this would integrate with a payment processor.</p>
+                        <button class="btn-primary demo-purchase">
+                            <i class="fas fa-check"></i>
+                            Complete Demo Purchase
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'js/subject_unavailable.js' %}"></script>
+</body>
+</html>

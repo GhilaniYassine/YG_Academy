@@ -1,0 +1,478 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="e-learning, online education, courses, tutoring, academic support">
+    <meta name="description" content="YG ACADEMY - Your ideal journey towards learning and excellence online with modern and interactive methods">
+    <title>YG ACADEMY - Online Learning Platform</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between py-4">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <img src="{% static 'images/1.png' %}" alt="YG ACADEMY" class="h-10 w-10 rounded-full" style="width: 80px; height: 80px; object-fit: cover; display: block; border: 2px solid #374151;">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800 font-poppins">YG ACADEMY</h1>
+                        <p class="text-sm text-gray-600">Learn. Grow. Succeed.</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center space-x-8">
+                    <a href="{% url 'home' %}" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Home</a>
+                    <a href="{% url 'about' %}" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">About Us</a>
+                    <a href="{% url 'teachers' %}" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Our Teachers</a>
+                    <a href="{% url 'content' %}" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Courses</a>
+                    <a href="{% url 'contact' %}" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Contact</a>
+                </nav>
+
+                <!-- Auth Buttons -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <a href="{% url 'login' %}" class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors">Login</a>
+                    <a href="{% url 'signup' %}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Register</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden p-2" id="mobile-menu-btn">
+                    <i class="fas fa-bars text-2xl text-gray-700"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="lg:hidden hidden" id="mobile-menu">
+                <div class="py-4 border-t">
+                    <div class="flex flex-col space-y-4">
+                        <a href="{% url 'home' %}" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
+                        <a href="{% url 'about' %}" class="text-gray-700 hover:text-blue-600 font-medium">About Us</a>
+                        <a href="{% url 'teachers' %}" class="text-gray-700 hover:text-blue-600 font-medium">Our Teachers</a>
+                        <a href="{% url 'content' %}" class="text-gray-700 hover:text-blue-600 font-medium">Courses</a>
+                        <a href="{% url 'contact' %}" class="text-gray-700 hover:text-blue-600 font-medium">Contact</a>
+                        <div class="flex space-x-4 pt-4">
+                            <a href="{% url 'login' %}" class="px-4 py-2 text-blue-600 border border-blue-600 rounded-lg">Login</a>
+                            <a href="{% url 'signup' %}" class="px-4 py-2 bg-blue-600 text-white rounded-lg">Register</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-10 lg:mb-0">
+                    <h1 class="text-5xl lg:text-6xl font-bold font-poppins mb-6 leading-tight">
+                        YG ACADEMY
+                    </h1>
+                    <p class="text-xl lg:text-2xl mb-8 opacity-90 leading-relaxed">
+                        Your ideal journey towards learning and excellence online with modern and interactive methods.
+                        <br><br>
+                        We provide support lessons for all high school branches and academic levels to ensure your success.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#courses" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-center">
+                            Start Learning Now
+                        </a>
+                        <a href="{% url 'about' %}" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors text-center">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="w-80 h-80 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                            <div class="w-64 h-64 bg-white bg-opacity-30 rounded-full flex items-center justify-center">
+                                <i class="fas fa-graduation-cap text-8xl text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="mb-8">
+                    <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+                    <h2 class="text-4xl font-bold text-gray-800 font-poppins mb-6">
+                        We're Here to Help You Learn and Grow
+                    </h2>
+                    <p class="text-lg text-gray-600 leading-relaxed mb-8">
+                        We believe that learning is the key to success, and that's why we're here to guide you on your educational journey and help you achieve your goals and develop your skills, with the best teachers who will provide you with high-quality education.
+                    </p>
+                    <p class="text-gray-600">
+                        Discover more of our content on YouTube! Click the button to watch us on social media platforms.
+                    </p>
+                </div>
+                <div class="flex justify-center">
+                    <div class="bg-blue-100 p-6 rounded-full">
+                        <i class="fas fa-play text-4xl text-blue-600"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subjects Section -->
+    <section id="courses" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 font-poppins mb-4">
+                    📚 We Teach All High School Subjects!
+                </h2>
+                <p class="text-lg text-gray-600">Scroll down to see them all</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <!-- Science -->
+                <div class="bg-white rounded-xl p-8 shadow-lg card-hover">
+                    <div class="text-center">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-flask text-2xl text-green-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Science</h3>
+                        <p class="text-gray-600">Comprehensive science courses covering physics, chemistry, and biology with practical experiments and real-world applications.</p>
+                    </div>
+                </div>
+
+                <!-- Mathematics -->
+                <div class="bg-white rounded-xl p-8 shadow-lg card-hover">
+                    <div class="text-center">
+                        <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-calculator text-2xl text-blue-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Mathematics</h3>
+                        <p class="text-gray-600">Advanced mathematics courses from algebra to calculus, designed to build strong problem-solving skills.</p>
+                    </div>
+                </div>
+
+                <!-- Computer Science -->
+                <div class="bg-white rounded-xl p-8 shadow-lg card-hover">
+                    <div class="text-center">
+                        <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-laptop-code text-2xl text-purple-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Computer Science</h3>
+                        <p class="text-gray-600">Programming fundamentals, algorithms, and modern technology concepts for the digital age.</p>
+                    </div>
+                </div>
+
+                <!-- Literature -->
+                <div class="bg-white rounded-xl p-8 shadow-lg card-hover">
+                    <div class="text-center">
+                        <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-book text-2xl text-red-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Literature</h3>
+                        <p class="text-gray-600">Explore classic and modern literature, develop critical thinking and writing skills.</p>
+                    </div>
+                </div>
+
+                <!-- Economics -->
+                <div class="bg-white rounded-xl p-8 shadow-lg card-hover">
+                    <div class="text-center">
+                        <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chart-line text-2xl text-yellow-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Economics</h3>
+                        <p class="text-gray-600">Understanding economic principles, market dynamics, and financial literacy for real-world applications.</p>
+                    </div>
+                </div>
+
+                <!-- Technical Studies -->
+                <div class="bg-white rounded-xl p-8 shadow-lg card-hover">
+                    <div class="text-center">
+                        <div class="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-cogs text-2xl text-indigo-600"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Technical Studies</h3>
+                        <p class="text-gray-600">Hands-on technical education covering engineering principles and practical applications.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 font-poppins mb-4">Meet Our Expert Teachers</h2>
+                <p class="text-lg text-gray-600">Dedicated professionals committed to your success</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Teacher 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="h-64 bg-gradient-to-br from-blue-400 to-purple-500"></div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Sarah Johnson</h3>
+                        <p class="text-blue-600 font-medium mb-3">Mathematics Specialist</p>
+                        <p class="text-gray-600 mb-4">Expert in advanced mathematics with 10+ years of teaching experience and proven track record of student success.</p>
+                        <div class="flex justify-center space-x-4">
+                            <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fab fa-facebook text-xl"></i></a>
+                            <a href="#" class="text-blue-400 hover:text-blue-600"><i class="fab fa-twitter text-xl"></i></a>
+                            <a href="#" class="text-pink-600 hover:text-pink-800"><i class="fab fa-instagram text-xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teacher 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="h-64 bg-gradient-to-br from-green-400 to-blue-500"></div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Ahmed Hassan</h3>
+                        <p class="text-blue-600 font-medium mb-3">Science Teacher</p>
+                        <p class="text-gray-600 mb-4">Passionate about making science accessible and engaging for all students through innovative teaching methods.</p>
+                        <div class="flex justify-center space-x-4">
+                            <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fab fa-facebook text-xl"></i></a>
+                            <a href="#" class="text-blue-400 hover:text-blue-600"><i class="fab fa-twitter text-xl"></i></a>
+                            <a href="#" class="text-pink-600 hover:text-pink-800"><i class="fab fa-instagram text-xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teacher 3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="h-64 bg-gradient-to-br from-purple-400 to-pink-500"></div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Maria Garcia</h3>
+                        <p class="text-blue-600 font-medium mb-3">Literature & Languages</p>
+                        <p class="text-gray-600 mb-4">Dedicated to helping students develop strong communication skills and appreciation for literature.</p>
+                        <div class="flex justify-center space-x-4">
+                            <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fab fa-facebook text-xl"></i></a>
+                            <a href="#" class="text-blue-400 hover:text-blue-600"><i class="fab fa-twitter text-xl"></i></a>
+                            <a href="#" class="text-pink-600 hover:text-pink-800"><i class="fab fa-instagram text-xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 gradient-bg text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white bg-opacity-10 rounded-xl p-8 backdrop-blur-sm">
+                    <div class="text-5xl font-bold mb-2">5+</div>
+                    <div class="text-xl font-medium">Years of Experience</div>
+                </div>
+                <div class="bg-white bg-opacity-10 rounded-xl p-8 backdrop-blur-sm">
+                    <div class="text-5xl font-bold mb-2">1000+</div>
+                    <div class="text-xl font-medium">Happy Students</div>
+                </div>
+                <div class="bg-white bg-opacity-10 rounded-xl p-8 backdrop-blur-sm">
+                    <div class="text-5xl font-bold mb-2">98%</div>
+                    <div class="text-xl font-medium">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 font-poppins mb-4">About YG ACADEMY</h2>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="flex flex-col lg:flex-row">
+                        <!-- Tabs -->
+                        <div class="lg:w-1/3 bg-gray-100">
+                            <div class="p-6">
+                                <button class="w-full text-left p-4 bg-blue-600 text-white rounded-lg mb-2 tab-btn active" data-tab="overview">
+                                    <i class="fas fa-eye mr-3"></i>Overview
+                                </button>
+                                <button class="w-full text-left p-4 text-gray-700 hover:bg-gray-200 rounded-lg mb-2 tab-btn" data-tab="founder">
+                                    <i class="fas fa-user mr-3"></i>Founder
+                                </button>
+                                <button class="w-full text-left p-4 text-gray-700 hover:bg-gray-200 rounded-lg tab-btn" data-tab="mission">
+                                    <i class="fas fa-bullseye mr-3"></i>Mission
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="lg:w-2/3 p-8">
+                            <div class="tab-content active" id="overview">
+                                <h3 class="text-2xl font-bold text-gray-800 mb-4">
+                                    YG ACADEMY is an innovative educational platform that combines engaging design with flawless functionality.
+                                </h3>
+                                <p class="text-blue-600 mb-4">
+                                    We provide comprehensive online education solutions tailored to meet the needs of modern students.
+                                </p>
+                                <p class="text-gray-600">
+                                    Our platform offers interactive courses, expert instruction, and personalized learning experiences to help students achieve their academic goals and prepare for their future careers.
+                                </p>
+                            </div>
+
+                            <div class="tab-content hidden" id="founder">
+                                <h3 class="text-2xl font-bold text-gray-800 mb-4">Our Founder's Vision</h3>
+                                <p class="text-gray-600 mb-4">
+                                    Founded with the vision of making quality education accessible to all students, YG ACADEMY was created by educators who understand the challenges of modern learning.
+                                </p>
+                                <p class="text-gray-600">
+                                    Our founder's commitment to educational excellence drives our mission to provide innovative, effective, and engaging learning experiences that prepare students for success in their academic and professional lives.
+                                </p>
+                            </div>
+
+                            <div class="tab-content hidden" id="mission">
+                                <h3 class="text-2xl font-bold text-gray-800 mb-4">Our Mission</h3>
+                                <h4 class="text-lg font-semibold text-blue-600 mb-3">Empowering Students Through Quality Education</h4>
+                                <p class="text-gray-600">
+                                    We are committed to providing exceptional educational experiences that inspire learning, foster growth, and prepare students for success in an ever-changing world. Our mission is to make quality education accessible, engaging, and effective for every student.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="{% static 'images/1.png' %}" alt="YG ACADEMY" class="h-10 w-10 rounded-full" style="width: 50px; height: 50px; object-fit: cover; display: block;">
+                        <h3 class="text-2xl font-bold font-poppins">YG ACADEMY</h3>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Empowering students through innovative online education and personalized learning experiences.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="{% url 'home' %}" class="text-gray-300 hover:text-white">Home</a></li>
+                        <li><a href="{% url 'about' %}" class="text-gray-300 hover:text-white">About</a></li>
+                        <li><a href="{% url 'content' %}" class="text-gray-300 hover:text-white">Courses</a></li>
+                        <li><a href="{% url 'teachers' %}" class="text-gray-300 hover:text-white">Teachers</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><i class="fas fa-envelope mr-2"></i>info@tunisiaacademy.com</li>
+                        <li><i class="fas fa-phone mr-2"></i>+216 XX XXX XXX</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>Tunisia</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-300">&copy; 2024 YG ACADEMY. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and contents
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active', 'bg-blue-600', 'text-white');
+                    btn.classList.add('text-gray-700', 'hover:bg-gray-200');
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to clicked button and corresponding content
+                this.classList.add('active', 'bg-blue-600', 'text-white');
+                this.classList.remove('text-gray-700', 'hover:bg-gray-200');
+                document.getElementById(tabId).classList.remove('hidden');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
