@@ -540,3 +540,9 @@ body {
         padding: 20px;
     }
 }
+
+.u-section-1 {
+  background-image: none; /* temporary: avoids MissingFileError */
+}
+
+/* Comment out any other background-image references */

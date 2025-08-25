@@ -1,7 +1,5 @@
- .u-section-1 {
-  background-image: linear-gradient(0deg, rgba(9, 104, 193, 0.55), rgba(9, 104, 193, 0.55)), url('images/462120461_122197141868080744_6097632024131607263_n.jpg');
-  background-position: 50% 50%;
-  background-size: cover, cover;
+.u-section-1 {
+  background-image: none;
 }
 
 .u-section-1 .u-sheet-1 {
@@ -649,7 +647,7 @@
 .u-section-3 .u-image-1 {
   width: 83px;
   height: 83px;
-  background-image: url("images/a71953cb0f788f942fbdf0c31bf3fb6cce875bf60cc01c66fed4a0348ee5f2745091fa02c2e550f521ddb0c099ae783b97e9b8c6ad39de9a19cd64_1280.jpg");
+  background-image: none; /* temporary: avoids MissingFileError */
   background-position: 50% 50%;
   margin: 0 auto;
 }
@@ -1005,7 +1003,7 @@
     margin-left: 89px;
   }
 } .u-section-4 {
-  background-image: url("images/4a926fbc7b06c759fe6764c1810e727b63f25247a210af4064248815c8480211f62712cc5269df0ad3c331b84499558ed91c94a1bc2790ef1fd98e_1280.jpg");
+  background-image: none; /* temporary: avoids MissingFileError */
   background-position: 50% 50%;
 }
 

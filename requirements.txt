@@ -2,3 +2,7 @@
 google-generativeai==0.3.2
 PyPDF2==3.0.1
 python-dotenv==1.0.0
+# runtime for container
+Django==4.2.18
+gunicorn==21.2.0
+whitenoise==6.6.0

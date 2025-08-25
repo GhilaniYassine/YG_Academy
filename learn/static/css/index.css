@@ -26,7 +26,8 @@
 .u-section-1 .u-image-1 {
   height: 632px;
   width: 632px;
-  background-image: url("../images/Untitled-1.jpg");
+  /* background-image: url("../images/Untitled-1.jpg"); */
+  background-image: none; /* temporary: avoids MissingFileError */
   background-position: 50% 50%;
   --animation-custom_in-translate_x: -300px;
   --animation-custom_in-translate_y: 0px;
@@ -124,8 +125,10 @@
   .u-section-1 .u-shape-2 {
     margin-top: 136px;
   }
-} .u-section-2 {
-  background-image: url("../images/6.jpg");
+} 
+.u-section-2 {
+  /* background-image: url("../images/6.jpg"); */
+  background-image: none; /* temporary: avoids MissingFileError */
   background-position: 50% 50%;
 }
 
@@ -249,14 +252,16 @@
   .u-section-2 .u-line-2 {
     width: 320px;
   }
-}.u-section-3 .u-sheet-1 {
+}
+.u-section-3 .u-sheet-1 {
   min-height: 337px;
 }
 
 .u-section-3 .u-image-1 {
   width: 149px;
   height: 149px;
-  background-image: url("../images/logotn.png");
+  /* background-image: url("../images/logotn.png"); */
+  background-image: none; /* temporary: avoids MissingFileError */
   background-position: 50% 50%;
   margin: 0 48px 0 auto;
 }
@@ -284,7 +289,8 @@
   .u-section-3 .u-text-1 {
     font-size: 1.5rem;
   }
-} .u-section-4 {
+} 
+.u-section-4 {
   background-image: none;
 }
 
@@ -586,7 +592,8 @@
     margin-right: initial;
     margin-left: initial;
   }
-} .u-section-5 {
+} 
+.u-section-5 {
   min-height: 755px;
 }
 
@@ -895,7 +902,8 @@
   .u-section-5 .u-text-10 {
     width: auto;
   }
-} .u-section-6 {
+} 
+.u-section-6 {
   background-image: none;
 }
 
@@ -1066,7 +1074,8 @@
   .u-section-6 .u-text-6 {
     width: auto;
   }
-} .u-section-7 {
+} 
+.u-section-7 {
   background-image: none;
 }
 

@@ -197,6 +197,44 @@ python manage.py runserver
    - Ensure media directory exists for PDF uploads
    - Check file upload permissions
 
+## 🐳 Docker (Containerized Run)
+
+Build image:
+```bash
+docker build -t yg_academy:latest .
+```
+
+Run container (SQLite + static/media volumes):
+```bash
+docker run --rm \
+  -p 8000:8000 \
+  --env-file .env \
+  -e DEBUG=False \
+  -e SECRET_KEY=change_me_in_prod \
+  -e ALLOWED_HOSTS=127.0.0.1,localhost \
+  -v "$(pwd)"/media:/app/media \
+  -v "$(pwd)"/staticfiles:/app/staticfiles \
+  yg_academy:latest
+```
+
+Open: http://localhost:8000
+
+Notes:
+- WhiteNoise serves collected static files from /app/staticfiles.
+
+## Troubleshooting: collectstatic MissingFileError
+If build/run fails with:
+- `whitenoise.storage.MissingFileError: The file 'images/...' could not be found ...`
+Then one of your CSS files references an image that isn’t present in static sources.
+
+Fix options:
+- Add the missing files under:
+  - `learn/static/images/Untitled-1.jpg`
+  - `learn/static/images/6.jpg`
+  - `learn/static/images/logotn.png`
+- Or temporarily remove/disable those `background-image: url(...)` lines in `css/index.css` (already done in this repo).
+- After adding assets, you can restore the URLs and rerun `collectstatic`.
+
 ## 📁 Project Structure
 
 ```
